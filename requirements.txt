@@ -1,0 +1,6 @@
+pyyaml
+sentence-transformers
+scikit-learn
+rapidfuzz
+typer
+pytest
