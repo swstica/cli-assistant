@@ -1,0 +1,213 @@
+- id: list_files
+  intent: "list files"
+  aliases:
+    - "show files"
+    - "see all files"
+    - "list all files"
+  command_template: "ls -la {path}"
+  description: "Lists all files, including hidden ones, in long format."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "how do I see hidden files?"
+    - "show me everything in folder"
+
+- id: current_dir
+  intent: "show c urrent directory"
+  aliases: 
+    - "where am i"
+    - "what is my current directory"
+    - "show current path"
+    - "current folder"
+  command_template: "pwd"
+  description: "Prints the current working directory."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples: 
+  - "what folder i am in right now?"
+  - "where am i now?"
+
+- id: change_dir
+  intent: "change directory"
+  aliases: 
+  - "go to folder"
+  - "move to directory"
+  - "cd into"
+  command_template: "cd {path}"
+  description: "Changes the current working directory to the specified path."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "how do i go to documents folder?"
+    - "switch to another directory"
+
+- id: make_dir
+  intent: "create directory"
+  aliases:
+    - "make folder"
+    - "new folder"
+    - "mkdir"
+  command_template: "mkdir {name}"
+  description: "Creates a new directory."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "how do i create a folder?"
+    - "make a new directory called test"
+
+- id: remove_file
+  intent: "remove file"
+  aliases:
+    - "delete file"
+    - "remove a file"
+    - "rm"
+  command_template: "rm {path}"
+  description: "Removes a file from the system."
+  platforms: ["unix"]
+  safety_level: "high"
+  examples:
+    - "how do i delete a file?"
+    - "remove file test.txt"
+
+# --- Python Commands ---
+- id: show_python_version
+  intent: "show python version"
+  aliases:
+    - "python version"
+    - "check python version"
+    - "which python"
+  command_template: "python --version"
+  description: "Displays the installed Python version."
+  platforms: ["unix", "windows"]
+  safety_level: "low"
+  examples:
+    - "how do i check python version?"
+    - "which python do i have?"
+
+- id: pip_install
+  intent: "install package with pip"
+  aliases:
+    - "pip install"
+    - "add python package"
+    - "install library"
+  command_template: "pip install {package}"
+  description: "Installs a Python package using pip."
+  platforms: ["unix", "windows"]
+  safety_level: "medium"
+  examples:
+    - "how do i install requests?"
+    - "pip add numpy"
+
+- id: create_virtualenv
+  intent: "create virtual environment"
+  aliases:
+    - "make venv"
+    - "new virtualenv"
+    - "python venv"
+  command_template: "python -m venv {name}"
+  description: "Creates a new Python virtual environment."
+  platforms: ["unix", "windows"]
+  safety_level: "low"
+  examples:
+    - "create virtualenv called env"
+    - "make python venv"
+
+# --- Git Commands ---
+- id: git_status
+  intent: "git status"
+  aliases:
+    - "check git status"
+    - "see changes"
+    - "git what changed"
+  command_template: "git status"
+  description: "Shows the working tree status."
+  platforms: ["unix", "windows"]
+  safety_level: "low"
+  examples:
+    - "what files did i change?"
+    - "see git changes"
+
+- id: git_branch
+  intent: "show git branch"
+  aliases:
+    - "current branch"
+    - "which branch am i on"
+    - "git branch name"
+  command_template: "git branch --show-current"
+  description: "Displays the current branch name."
+  platforms: ["unix", "windows"]
+  safety_level: "low"
+  examples:
+    - "which branch am i on?"
+    - "git branch name"
+
+- id: git_add_commit
+  intent: "git add and commit"
+  aliases:
+    - "commit changes"
+    - "git commit all"
+    - "add and commit"
+  command_template: "git add . && git commit -m \"{msg}\""
+  description: "Stages all changes and commits with a message."
+  platforms: ["unix", "windows"]
+  safety_level: "medium"
+  examples:
+    - "commit my changes with message initial commit"
+    - "git add everything and commit"
+
+- id: git_push
+  intent: "git push"
+  aliases:
+    - "push changes"
+    - "send to remote"
+    - "git upload"
+  command_template: "git push"
+  description: "Pushes commits to the remote repository."
+  platforms: ["unix", "windows"]
+  safety_level: "medium"
+  examples:
+    - "how do i push my changes?"
+    - "send commits to github"
+
+# --- System/Utility Commands ---
+- id: show_disk_usage
+  intent: "show disk usage"
+  aliases:
+    - "check space"
+    - "disk usage"
+    - "df"
+  command_template: "df -h"
+  description: "Shows disk space usage in human-readable format."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "how much space is left?"
+    - "disk usage report"
+
+- id: list_processes
+  intent: "list processes"
+  aliases:
+    - "show processes"
+    - "running processes"
+    - "ps aux"
+  command_template: "ps aux"
+  description: "Lists running processes."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "what processes are running?"
+    - "list all processes"
+
+- id: find_text_in_files
+  intent: "search text in files"
+  aliases:
+    - "grep text"
+    - "find string"
+    - "search inside files"
+  command_template: "grep -R \"{text}\" {path}"
+  description: "Searches recursively for a text inside files."
+  platforms: ["unix"]
+  safety_level: "low"
+  examples:
+    - "search for TODO in my code"
+    - "find text password in folder"
