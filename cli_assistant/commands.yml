@@ -13,7 +13,7 @@
     - "show me everything in folder"
 
 - id: current_dir
-  intent: "show c urrent directory"
+  intent: "show current directory"
   aliases: 
     - "where am i"
     - "what is my current directory"
@@ -211,3 +211,4 @@
   examples:
     - "search for TODO in my code"
     - "find text password in folder"
+    
