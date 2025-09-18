@@ -77,10 +77,8 @@ def suggest_valid_command(user_command, commands, cutoff=0.6):
     
 
 
-
-
 #test
-
+"""
 if __name__ == "__main__":
     cmds = load_commands()
     index = build_index(cmds)
@@ -98,7 +96,7 @@ if __name__ == "__main__":
         print("ah ah! please check ypur command, we couldn't find any suggestion :(")
     
     #sample query
-""" user_query = "stop the currently running process"
+    user_query = "stop the currently running process"
     matches = find_best_match(user_query, index, top_k=3)
     
     print(f"\nQuery: {user_query}")
