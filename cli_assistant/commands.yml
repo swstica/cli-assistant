@@ -69,6 +69,21 @@
     - "how do i delete a file?"
     - "remove file test.txt"
 
+- id: stop_current_command
+  intent: "terminate current command"
+  aliases:
+    - "stop running command"
+    - "stop the process"
+    - "terminate the process"
+  command_template: "^C"
+  description: "Terminates the running commands or processes"
+  platforms: ["unix", "windows"]
+  safety_level: "mid"
+  examples:
+    - "stop everything"
+    - "terminate commands"
+    - "terminate process"
+
 # --- Python Commands ---
 - id: show_python_version
   intent: "show python version"
