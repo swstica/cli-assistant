@@ -2,6 +2,7 @@ import yaml
 from sentence_transformers import SentenceTransformer
 import numpy as np
 from numpy.linalg import norm
+import difflib
 from pathlib import Path
 
 def load_commands(yaml_path: str = "cli_assistant/commands.yml"):
@@ -66,17 +67,43 @@ def find_best_match(user_input, index, top_k):
     
     return scores[:top_k]
 
+#handle typos and wrong cmds
+
+def suggest_valid_command(user_command, commands, cutoff=0.6):
+    
+    matches = difflib.get_close_matches(user_command, commands, n=1, cutoff=cutoff)
+    
+    return matches[0]if matches else None
+    
+
+
+
+
+#test
 
 if __name__ == "__main__":
     cmds = load_commands()
     index = build_index(cmds)
     print(f"built index with {len(index)} commands.")
     print("example entry:", index[0]["id"], "->", index[0]["vector"][:5], ["..."]) 
+            
+    wrong_command = "git"
+    all_templates = [c["command_template"] for c in index]
+    correction = suggest_valid_command(wrong_command, all_templates)
+    
+    print(f"\nuser typed: {wrong_command}")
+    if correction:
+        print(f"did you mean: {correction}")
+    else:
+        print("ah ah! please check ypur command, we couldn't find any suggestion :(")
     
     #sample query
-    user_query = "stop the currently running process"
+""" user_query = "stop the currently running process"
     matches = find_best_match(user_query, index, top_k=3)
     
     print(f"\nQuery: {user_query}")
     for entry, score in matches:
-        print(f"\nmatch: {entry['id']} | score: {score:.3f} | template: {entry['command_template']}") 
+        print(f"\nmatch: {entry['id']} | score: {score:.3f} | template: {entry['command_template']}")  
+"""
+        
+
