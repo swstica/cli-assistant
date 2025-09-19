@@ -4,7 +4,10 @@
     - "show files"
     - "see all files"
     - "list all files"
+    - "Show hidden files in a directory"
   command_template: "ls -la {path}"
+  defaults:
+    path: "." 
   description: "Lists all files, including hidden ones, in long format."
   platforms: ["unix"]
   safety_level: "low"
@@ -34,6 +37,8 @@
   - "move to directory"
   - "cd into"
   command_template: "cd {path}"
+  defaults:
+    path: "."
   description: "Changes the current working directory to the specified path."
   platforms: ["unix"]
   safety_level: "low"
@@ -48,6 +53,8 @@
     - "new folder"
     - "mkdir"
   command_template: "mkdir {name}"
+  defaults:
+    file: "example.txt"
   description: "Creates a new directory."
   platforms: ["unix"]
   safety_level: "low"

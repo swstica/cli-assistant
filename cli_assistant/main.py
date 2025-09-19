@@ -1,5 +1,22 @@
 import argparse
-from .ai_engine import load_commands, build_index, find_best_match, suggest_valid_command
+from .ai_engine import load_commands, build_index, find_best_match, suggest_valid_command, fill_placeholders
+import subprocess
+
+def run_command(command_template):
+    try:
+        result = subprocess.run(
+            command_template,
+            shell= True,
+            capture_output=True,
+            text=True
+        )
+        if result.stdout:
+            print(result.stdout)
+        if result.stderr:
+            print("Error: ", result.stderr)
+    except Exception as e:
+        print(f" failed to run command: {e}")
+    
 
 def run_cli():
     cmds = load_commands()
@@ -14,6 +31,11 @@ def run_cli():
         nargs = "+",
         help = "Your input (natural language or CLI commands)"
     )
+    parser.add_argument(
+        "--run",
+        action = "store_true",
+        help = "Execute the suggested command"
+    )
     
     args= parser.parse_args()
     user_input = " ".join(args.query)
@@ -24,10 +46,21 @@ def run_cli():
     if score > 0.6 :
         print(f"\nI think you want : {best_entry["command_template"]}")
         print(f" (matched intent: {best_entry["id"]}, score={score:.2f})")
+        if args.run:
+            print("running command....")
+            final_command = fill_placeholders(
+                best_entry["command_template"],
+                best_entry.get("defaults", {})
+            )
+            run_command(final_command)
     else: 
         correction = suggest_valid_command(user_input, all_templates)
         if correction:
             print("did you mean: {correction}")
+            
+            if args.run:
+                print("running command....")
+                run_command(correction)
         else:
             print("ah! please check ypur command, we couldn't find any suggestion :(")
     

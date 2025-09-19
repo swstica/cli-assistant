@@ -4,10 +4,11 @@ import numpy as np
 from numpy.linalg import norm
 import difflib
 from pathlib import Path
+import re
 
-def load_commands(yaml_path: str = "cli_assistant/commands.yml"):
+def load_commands(file_path= "cli_assistant/commands.yml"):
     """Loads commands from a YAML file and returns them as a list of dicts."""
-    with open(yaml_path, 'r') as file:
+    with open(file_path, 'r') as file:
         commands = yaml.safe_load(file)
     return commands
     
@@ -75,7 +76,23 @@ def suggest_valid_command(user_command, commands, cutoff=0.6):
     
     return matches[0]if matches else None
     
+#handle placeholders
 
+def fill_placeholders(command_template, defaults=None):
+    placeholders = re.findall(r"{(.*?)}", command_template)
+    filled_command = command_template
+    
+    for placeholder in placeholders:
+        default = (defaults or {}).get(placeholder, "")
+        prompt = f"value of '{placeholder}'"
+        if default:
+            prompt += f"[{default}] "
+        prompt += ": "
+        
+        value = input(prompt).strip() or default
+        filled_command = filled_command.replace(f"{{{placeholder}}}", value)
+        
+    return filled_command
 
 #test
 """
